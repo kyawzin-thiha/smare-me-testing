@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id String @id @default(cuid()) @map("_id")
+  email String @unique
+  password String 
+  user User?
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id String @id @default(cuid()) @map("_id")
+  accountId String @unique
+  account Account @relation(fields: [accountId], references: [id])
+  name String 
+  email String @unique
+  profile String 
+  posts Post[] @relation(name: "User's Posts")
+  comments Comment[]
+  likedPostsId String[]
+  likedPosts Post[] @relation(name: "User's Liked Posts", fields: [likedPostsId], references: [id])
+  createdAt DateTime @default(now())
+  savedPostId String[]
+  savedPosts Post[] @relation(name: "User's Saved Posts", fields: [savedPostId], references: [id])
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id String @id @default(cuid()) @map("_id")
+  userId String 
+  user User @relation(name: "User's Posts",fields: [userId], references: [id])
+  title String
+  description String? 
+  image String
+  comments Comment[]
+  likedByUserId String[] 
+  likedBy User[] @relation(name: "User's Liked Posts", fields: [likedByUserId], references: [id])
+  savedByUserId String[]
+  savedBy User[] @relation(name: "User's Saved Posts", fields: [savedByUserId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Comment {
+  id String @id @default(cuid()) @map("_id")
+  postId String 
+  post Post @relation(fields: [postId], references: [id])
+  userId String 
+  user User @relation(fields: [userId], references: [id])
+  comment String 
+  createdAt DateTime @default(now())
+}

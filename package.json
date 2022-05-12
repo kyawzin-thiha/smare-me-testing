@@ -1,0 +1,24 @@
+{
+  "name": "share-me",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/busboy": "^1.5.0",
+    "nuxt": "3.0.0-rc.1",
+    "prisma": "^3.14.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.88.0",
+    "@prisma/client": "^3.14.0",
+    "bcryptjs": "^2.4.3",
+    "busboy": "^1.6.0",
+    "sass": "^1.51.0",
+    "sass-loader": "^10.2.1"
+  }
+}
